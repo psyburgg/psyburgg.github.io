@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Hangman game</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            text-align: center;
+            background-color: #ffe6f2; /* Light pink */
+            color: #ff6699; /* Pink */
+        }
+        h2 {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+        #word {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        #letters {
+            margin-top: 20px;
+        }
+        button {
+            background-color: #ffcccc; /* Light red */
+            border: 2px solid #ff6699; /* Pink */
+            color: #ff6699; /* Pink */
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 20px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #ff99cc; /* Lighter pink */
+        }
+        #guesses {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="love">
+            <h2>It's a Hangman game! Guess the word for a surprise;)</h2>
+            <div id="word"></div>
+            <div id="letters"></div>
+            <div id="guesses"></div>
+
+            <script>
+                let selectedWord = "KISS";
+                let guessedLetters = [];
+                let remainingGuesses = 6;
+                
+                function displayWord() {
+                    let wordDisplay = '';
+                    for (let letter of selectedWord) {
+                        if (guessedLetters.includes(letter)) {
+                            wordDisplay += letter + ' ';
+                        } else {
+                            wordDisplay += '_ ';
+                        }
+                    }
+                    document.getElementById('word').innerHTML = wordDisplay;
+                }
+                
+                function displayLetters() {
+                    let letterButtons = '';
+                    for (let i = 65; i <= 90; i++) {
+                        let letter = String.fromCharCode(i);
+                        if (!guessedLetters.includes(letter)) {
+                            letterButtons += `<button onclick="guess('${letter}')">${letter}</button>`;
+                        } else {
+                            letterButtons += `<button style="background-color: #ff99cc;" disabled>${letter}</button>`;
+                        }
+                    }
+                    document.getElementById('letters').innerHTML = letterButtons;
+                }
+                
+                function displayGuesses() {
+                    document.getElementById('guesses').innerHTML = `Remaining Guesses: ${remainingGuesses}`;
+                }
+                
+                function checkWin() {
+                    if (selectedWord.split('').every(letter => guessedLetters.includes(letter))) {
+                        alert('Yay you got it! Will you accept a kiss as your prize?');
+                        resetGame();
+                    } else if (remainingGuesses === 0) {
+                        alert('Aw no, you didnt get it :( Wanna try again?');
+                        resetGame();
+                    }
+                }
+                
+                function guess(letter) {
+                    guessedLetters.push(letter);
+                    if (!selectedWord.includes(letter)) {
+                        remainingGuesses--;
+                    }
+                    displayWord();
+                    displayLetters();
+                    displayGuesses();
+                    checkWin();
+                }
+                
+                function resetGame() {
+                    selectedWord = "KISS";
+                    guessedLetters = [];
+                    remainingGuesses = 6;
+                    displayWord();
+                    displayLetters();
+                    displayGuesses();
+                }
+                
+                displayWord();
+                displayLetters();
+                displayGuesses();
+            </script>
+        </div>
+    </div>
+</body>
+</html>
