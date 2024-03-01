@@ -35,7 +35,7 @@ a{font-size: 24px;text-decoration: none;padding: 5px 10px;
 	100%{transform: scale(.5);}
 }
 body {
-	font-family: 'Comic Sans MS', cursive, sans-serif;
+	font-family: 'Comic Sans MS', sans-serif;
 	text-align: center;
 	background-color: #ffe6f2; /* Light pink */
 	color: #ff6699; /* Pink */
