@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <style>
         body {
-            font-family: 'Comic Sans MS', sans-serif;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
             text-align: center;
             background-color: #ffe6f2; /* Light pink */
             color: #ff6699; /* Pink */
@@ -53,14 +53,16 @@
             <div id="guesses"></div>
 
             <script>
-                let selectedWord = "KISS";
+                let selectedWord = "B MINE";
                 let guessedLetters = [];
                 let remainingGuesses = 6;
-                
+            
                 function displayWord() {
                     let wordDisplay = '';
                     for (let letter of selectedWord) {
-                        if (guessedLetters.includes(letter)) {
+                        if (letter === ' ') {
+                            wordDisplay += '&nbsp; ';
+                        } else if (guessedLetters.includes(letter)) {
                             wordDisplay += letter + ' ';
                         } else {
                             wordDisplay += '_ ';
@@ -68,7 +70,7 @@
                     }
                     document.getElementById('word').innerHTML = wordDisplay;
                 }
-                
+            
                 function displayLetters() {
                     let letterButtons = '';
                     for (let i = 65; i <= 90; i++) {
@@ -81,21 +83,26 @@
                     }
                     document.getElementById('letters').innerHTML = letterButtons;
                 }
-                
+            
                 function displayGuesses() {
                     document.getElementById('guesses').innerHTML = `Remaining Guesses: ${remainingGuesses}`;
                 }
-                
+            
                 function checkWin() {
-                    if (selectedWord.split('').every(letter => guessedLetters.includes(letter))) {
-                        alert('Yay you got it! Will you accept a kiss as your prize?');
-                        resetGame();
+                    displayWord(); // Update the display before checking win/lose condition
+                    if (selectedWord.replace(/ /g, '').split('').every(letter => guessedLetters.includes(letter))) {
+                        setTimeout(function() {
+                            alert('Yay you got it! Zoe, will you be mine?');
+                            resetGame();
+                        }, 100); // Delaying the alert by 100 milliseconds to ensure the display updates first
                     } else if (remainingGuesses === 0) {
-                        alert('Aw no, you didnt get it :( Wanna try again?');
-                        resetGame();
+                        setTimeout(function() {
+                            alert('Aw no, you didnt get it :( Wanna try again?');
+                            resetGame();
+                        }, 100); // Delaying the alert by 100 milliseconds to ensure the display updates first
                     }
                 }
-                
+            
                 function guess(letter) {
                     guessedLetters.push(letter);
                     if (!selectedWord.includes(letter)) {
@@ -106,20 +113,21 @@
                     displayGuesses();
                     checkWin();
                 }
-                
+            
                 function resetGame() {
-                    selectedWord = "KISS";
+                    selectedWord = "B MINE";
                     guessedLetters = [];
                     remainingGuesses = 6;
                     displayWord();
                     displayLetters();
                     displayGuesses();
                 }
-                
+            
                 displayWord();
                 displayLetters();
                 displayGuesses();
             </script>
+          
         </div>
     </div>
 </body>
